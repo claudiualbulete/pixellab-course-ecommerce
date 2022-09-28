@@ -1,14 +1,24 @@
 import Head from 'next/head'
+import { DefaultLayout } from "../layouts/Default";
+import Product from "../components/Product";
 
 const Home = () => {
     return (
-        <>
-            <Head>
-                <title>Homepage</title>
-            </Head>
+      <>
+        <Head>
+          <title>Shop!</title>
+        </Head>
 
-            <main>homepages</main>
-        </>
+        <DefaultLayout>
+          <Product/>
+          <Product/>
+          <Product/>
+          <Product/>
+          <Product/>
+          <Product/>
+          <Product/>
+        </DefaultLayout>
+      </>
     )
 }
 
