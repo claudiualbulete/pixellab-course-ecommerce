@@ -1,7 +1,7 @@
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
-export const Controls = () => {
+export const SocialIcons = () => {
   return (
     <section className="flex flex-row lg:flex-col justify-center items-center gap-2">
       <Link href="/">
@@ -24,5 +24,3 @@ export const Controls = () => {
     </section>
   )
 }
-
-export default Controls;

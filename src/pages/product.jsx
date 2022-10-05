@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { DefaultLayout } from "../layouts/Default";
+import { DefaultLayout } from "../layouts";
 
 const Product = () => {
   return (
