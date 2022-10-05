@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export const Product = ({ product }) => {
     return (
-        <article className="border p-6 w-full">
-            <header className="w-full h-72 flex justify-center relative">
+        <article className="border p-6">
+            <header className="w-full h-72 flex justify-center">
                 <Link href="/product">
                     <a title="Go to product page">
                         <Image src={product.image} alt={product.title} layout="intrinsic" width="300"

@@ -14,6 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         setProductsLoading(true);
+
         fetch(`${API_URL}/products`)
             .then(res => res.json())
             .then(json => {
@@ -53,6 +54,7 @@ const Home = () => {
                     )}
                 </div>
 
+                <div className="md:grid-cols-2 lg:grid-cols-2 lg:grid-cols-4"></div>
             </DefaultLayout>
         </>
     )
