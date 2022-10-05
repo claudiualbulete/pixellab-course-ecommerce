@@ -1,10 +1,28 @@
 import Head from 'next/head'
 import { DefaultLayout } from "../layouts";
-import { BackToCart, CartCheckout, CartControls, CartGrid } from "../components/cart";
+import { BackToShop, CartCheckout, CartControls, CartGrid } from "../components/cart";
 import { useEffect, useState } from "react";
+import { API_URL } from "../constants";
+import { Loader } from "../components/common";
 
 const Cart = () => {
     const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState(false);
+
+    useEffect(() => {
+        setProductsLoading(true);
+        fetch(`${API_URL}/products?limit=3`)
+            .then(res => res.json())
+            .then(json => {
+                setProductsLoading(false);
+
+                setProducts(json)
+            })
+            .catch((e) => {
+                // Notification instead of this log
+                console.log(e);
+            });
+    }, []);
 
     useEffect(() => {
         const products = [];
@@ -27,7 +45,7 @@ const Cart = () => {
 
             <DefaultLayout>
                 <section className="flex justify-between flex-wrap">
-                    <BackToCart/>
+                    <BackToShop/>
 
                     <div className="flex">
                         <CartControls/>
@@ -35,9 +53,19 @@ const Cart = () => {
                 </section>
 
                 <div className="flex my-16">
-                    <CartGrid products={products}/>
+                    {productsLoading ? (
+                        <Loader/>
+                    ) : (
+                        <div className="flex w-full justify-between">
+                            <div className="w-3/4">
+                                <CartGrid products={products}/>
+                            </div>
 
-                    <CartCheckout products={products}/>
+                            <div className="w-1/4">
+                                <CartCheckout products={products}/>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </DefaultLayout>
         </>

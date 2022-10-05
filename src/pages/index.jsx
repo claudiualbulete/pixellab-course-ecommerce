@@ -4,24 +4,29 @@ import { FiltersUsed, GridControls, FilterControls, ProductsGrid } from "../comp
 import { CartControls } from "../components/cart";
 
 import { useEffect, useState } from "react";
+import { API_URL } from "../constants";
+import { Loader } from "../components/common";
 
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [perRow, setPerRow] = useState(4);
+    const [productsLoading, setProductsLoading] = useState(false);
 
     useEffect(() => {
-        const products = [];
-        for (let i = 1; i <= 10; i++) {
-            products.push({
-                id: Math.random(),
-                name: 'prod name',
-                price: '200'
-            });
-        }
-        console.log('perRow', perRow);
+        setProductsLoading(true);
+        fetch(`${API_URL}/products`)
+            .then(res => res.json())
+            .then(json => {
+                setProductsLoading(false);
 
-        setProducts(products);
-    }, [perRow]);
+                setProducts(json)
+            })
+            .catch((e) => {
+                // Notification instead of this log
+                console.log(e);
+            });
+
+    }, []);
 
     return (
         <>
@@ -41,8 +46,13 @@ const Home = () => {
                 </section>
 
                 <div className="flex my-16">
-                    <ProductsGrid products={products} perRow={perRow}/>
+                    {productsLoading ? (
+                        <Loader/>
+                    ) : (
+                        <ProductsGrid products={products} perRow={perRow}/>
+                    )}
                 </div>
+
             </DefaultLayout>
         </>
     )
