@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { DefaultLayout } from "../../layouts";
 import { useEffect, useState } from "react";
 import { API_URL } from "../../constants";
-import { BackToShop, CartControls } from "../../components/cart";
+import { ContinueShopping, CartControls } from "../../components/cart";
 import { Loader } from "../../components/common";
-import { ProductRating } from "../../components/catalog/ProductRating";
+import { ProductRating } from "../../components/catalog";
 import { getCurrency } from "../../utils";
 
 const Product = () => {
@@ -48,7 +48,7 @@ const Product = () => {
 
             <DefaultLayout>
                 <section className="flex justify-between flex-wrap">
-                    <BackToShop/>
+                    <ContinueShopping/>
 
                     <div className="flex">
                         <CartControls/>

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { DefaultLayout } from "../layouts";
-import { BackToShop, CartCheckout, CartControls, CartGrid } from "../components/cart";
+import { ContinueShopping, CartCheckout, CartControls, CartGrid } from "../components/cart";
 import { useEffect, useState } from "react";
 import { API_URL } from "../constants";
 import { Loader } from "../components/common";
@@ -45,7 +45,7 @@ const Cart = () => {
 
             <DefaultLayout>
                 <section className="flex justify-between flex-wrap">
-                    <BackToShop/>
+                    <ContinueShopping/>
 
                     <div className="flex">
                         <CartControls/>
@@ -57,11 +57,11 @@ const Cart = () => {
                         <Loader/>
                     ) : (
                         <div className="flex flex-col lg:flex-row w-full justify-between gap-6">
-                            <div className="w-full lg:w-3/4">
+                            <div className="w-full lg:w-2/3">
                                 <CartGrid products={products}/>
                             </div>
 
-                            <div className="w-full lg:w-1/4">
+                            <div className="w-full lg:w-1/3">
                                 <CartCheckout products={products}/>
                             </div>
                         </div>

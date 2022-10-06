@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BiLeftArrow } from "react-icons/bi";
 
-export const BackToShop = () => {
+export const ContinueShopping = () => {
     return (
         <Link href="/">
             <button className="border w-48 h-20 flex items-center justify-center">

@@ -1,8 +1,8 @@
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BiX } from "react-icons/bi";
-import { ProductRating } from "../catalog/ProductRating";
-import { useState } from "react";
+import { ProductRating } from "../catalog";
 import { getCurrency } from "../../utils";
 
 export const CartProduct = ({ product, removeProduct, updateQuantity }) => {
