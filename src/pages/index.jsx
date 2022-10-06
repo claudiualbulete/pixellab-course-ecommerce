@@ -6,10 +6,12 @@ import { CartControls } from "../components/cart";
 import { useEffect, useState } from "react";
 import { API_URL } from "../constants";
 import { Loader } from "../components/common";
+import { Filters } from "../components/common/Filters";
 
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [perRow, setPerRow] = useState(4);
+    const [showFilters, setShowFilters] = useState(false);
     const [productsLoading, setProductsLoading] = useState(false);
 
     useEffect(() => {
@@ -41,10 +43,16 @@ const Home = () => {
 
                     <div className="flex">
                         <GridControls setPerRow={setPerRow}/>
-                        <FilterControls/>
+                        <FilterControls toggleFilters={setShowFilters}/>
                         <CartControls/>
                     </div>
                 </section>
+
+                {showFilters && (
+                    <section className="my-6">
+                        <Filters/>
+                    </section>
+                )}
 
                 <div className="flex my-16">
                     {productsLoading ? (
