@@ -3,6 +3,7 @@ import Image from "next/image";
 import { BiX } from "react-icons/bi";
 import { ProductRating } from "../catalog/ProductRating";
 import { useState } from "react";
+import { getCurrency } from "../../utils";
 
 export const CartProduct = ({ product, removeProduct, updateQuantity }) => {
     const [quantity, setQuantity] = useState(1);
@@ -41,7 +42,7 @@ export const CartProduct = ({ product, removeProduct, updateQuantity }) => {
             </div>
 
             <div className="w-1/12 flex justify-center items-center">
-                {price}
+                {getCurrency(price)}
             </div>
 
             <div className="w-2/12 flex justify-center items-center">
@@ -51,7 +52,7 @@ export const CartProduct = ({ product, removeProduct, updateQuantity }) => {
                 />
             </div>
 
-            <div className="w-1/12 flex justify-center items-center">{price}</div>
+            <div className="w-1/12 flex justify-center items-center">{getCurrency(price)}</div>
         </article>
     )
 }

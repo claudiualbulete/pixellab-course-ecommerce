@@ -6,7 +6,7 @@ export const GridControls = ({ setPerRow }) => {
 
     useEffect(() => {
         setPerRow(active);
-    }, [active]);
+    }, [active, setPerRow]);
 
     return (
         <section className="flex justify-center items-center">

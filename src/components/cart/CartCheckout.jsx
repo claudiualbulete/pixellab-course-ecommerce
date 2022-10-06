@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getCurrency } from "../../utils";
 
 export const CartCheckoutSection = ({ name, children }) => {
     return (
@@ -43,15 +44,15 @@ export const CartCheckout = ({ products }) => {
             <header className="bg-gray-200 py-2 px-4">Cart Totals</header>
 
             <CartCheckoutSection name="Subtotal">
-                <p className="text-gray-400">${priceTotal.padEnd(2, '00')}</p>
+                <p className="text-gray-400">{getCurrency(priceTotal)}</p>
             </CartCheckoutSection>
 
             <CartCheckoutSection name="Shipping">
-                {priceTotal}
+                Shipping info goes here
             </CartCheckoutSection>
 
             <CartCheckoutSection name="Total">
-                <p className="text-2xl">${priceTotal.padEnd(2, '00')}</p>
+                <p className="text-2xl">{getCurrency(priceTotal)}</p>
 
             </CartCheckoutSection>
 

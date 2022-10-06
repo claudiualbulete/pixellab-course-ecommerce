@@ -9,6 +9,7 @@ import { API_URL } from "../../constants";
 import { BackToShop, CartControls } from "../../components/cart";
 import { Loader } from "../../components/common";
 import { ProductRating } from "../../components/catalog/ProductRating";
+import { getCurrency } from "../../utils";
 
 const Product = () => {
     const router = useRouter();
@@ -79,7 +80,7 @@ const Product = () => {
                                 </p>
 
                                 <p className="my-6 text-3xl text-black">
-                                    ${price}
+                                    {getCurrency(price)}
                                 </p>
 
                                 <p className="my-6">
