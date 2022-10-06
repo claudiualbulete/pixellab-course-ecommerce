@@ -72,7 +72,10 @@ const Product = () => {
                                 <header className="mb-12">
                                     <h1 className="mb-3 uppercase text-2xl">{title}</h1>
 
-                                    <ProductRating rating={rating} showReviewers={true}></ProductRating>
+                                    <ProductRating
+                                        rating={rating}
+                                        showReviewers={true}
+                                    />
                                 </header>
 
                                 <p className="my-6">
@@ -89,8 +92,8 @@ const Product = () => {
 
                                 <footer className="mt-12">
                                     <Link href="/cart">
-                                        <button className="bg-black text-white px-6 py-3 uppercase">Add to Cart (Goes to
-                                            cart page for now)
+                                        <button className="bg-black text-white px-6 py-3 uppercase">
+                                            Add to Cart (Goes to cart page for now)
                                         </button>
                                     </Link>
                                 </footer>

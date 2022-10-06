@@ -5,7 +5,7 @@ export const CartControls = () => {
     return (
         <section className="flex justify-center items-center">
             <Link href="/cart">
-                <button title="Facebook" className="border w-20 h-20 flex items-center justify-center">
+                <button title="Go to Cart" className="border w-16 h-16 lg:w-20 lg:h-20 flex items-center justify-center">
                     <BsCart size="30"/>
                 </button>
             </Link>

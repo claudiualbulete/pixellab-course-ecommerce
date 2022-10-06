@@ -22,7 +22,7 @@ export const CartProduct = ({ product, removeProduct, updateQuantity }) => {
     }
 
     return (
-        <article className="py-6 w-full flex align-center justify-between gap-6 border-b-2">
+        <article className="py-6 w-full flex align-center justify-between gap-6 border-b">
             <button className="w-1/12" title="Remove product from cart" onClick={handleRemoveProduct}>
                 <BiX/>
             </button>
