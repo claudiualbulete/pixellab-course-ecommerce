@@ -56,12 +56,12 @@ const Cart = () => {
                     {productsLoading ? (
                         <Loader/>
                     ) : (
-                        <div className="flex w-full justify-between">
-                            <div className="w-3/4">
+                        <div className="flex flex-col lg:flex-row w-full justify-between gap-6">
+                            <div className="w-full lg:w-3/4">
                                 <CartGrid products={products}/>
                             </div>
 
-                            <div className="w-1/4">
+                            <div className="w-full lg:w-1/4">
                                 <CartCheckout products={products}/>
                             </div>
                         </div>

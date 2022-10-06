@@ -30,6 +30,7 @@ export const DefaultLayout = ({ children }) => {
     color: ${white};
     padding: 16px;
     height: 60px;
+    border-right: ${white};
 
     @media (min-width: 1024px) {
       width: 80px;
@@ -54,7 +55,7 @@ export const DefaultLayout = ({ children }) => {
         <Header/>
       </header>
 
-      <main className={`${contentCSS} container mx-auto`}>
+      <main className={`${contentCSS} container mx-auto px-6`}>
         {children}
       </main>
 

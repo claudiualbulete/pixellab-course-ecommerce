@@ -55,7 +55,7 @@ export const CartCheckout = ({ products }) => {
 
             </CartCheckoutSection>
 
-            <button className="bg-black text-white px-6 py-3 uppercase w-full">Proceed to checkout</button>
+            <button className="mt-6 bg-black text-white px-6 py-3 uppercase w-full">Proceed to checkout</button>
         </section>
     )
 }
