@@ -60,7 +60,7 @@ const Product = () => {
                     {productLoading ? (
                         <Loader/>
                     ) : (
-                        <div className="flex w-full gap-12">
+                        <div className="flex flex-col lg:flex-row w-full gap-12">
                             <div className="w-full lg:w-1/2">
                                 <Image layout="responsive" width="500" height="500"
                                        src={image}
