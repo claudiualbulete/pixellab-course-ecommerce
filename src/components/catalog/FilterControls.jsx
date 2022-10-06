@@ -13,10 +13,10 @@ export const FilterControls = ({ toggleFilters }) => {
     return (
         <section className="flex justify-center items-center">
             <button title="Filter Controls"
-                    className={`border w-32 h-20 flex items-center justify-center ${showFilters ? 'bg-black text-white' : ''}`}
+                    className={`border w-32 h-20 flex items-center justify-center transition-all transition-700 transform-gpu ${showFilters ? 'bg-black text-white' : ''}`}
                     onClick={handleToggleFilters}
             >
-                Filter
+                {showFilters ? 'Hide Filter' : 'Filter'}
             </button>
         </section>
     )

@@ -7,7 +7,7 @@ export const Product = ({ product }) => {
     const {id, image, price, title} = product
     return (
         <article className="p-6">
-            <header className="w-full h-72 flex justify-center">
+            <header className="w-full h-68 flex justify-center">
                 <Link href={`/products/${id}`}>
                     <a title="Go to product page">
                         <Image src={image} alt={title} layout="intrinsic" width="300"
