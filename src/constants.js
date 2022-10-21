@@ -1,5 +1,7 @@
 // Yeah, I'm pretty old fashion :D
 export const API_URL = 'https://fakestoreapi.com';
+export const DEFAULT_GRID_COLS = 4;
+export const DEFAULT_GRID_STORAGE_KEY = 'productsPerRow';
 
 export const FILTER_SORT_BY = {
     id: 'sort-by',

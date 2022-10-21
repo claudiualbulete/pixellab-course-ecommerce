@@ -1,47 +1,82 @@
-import { CartProduct } from "./";
+import { CartProduct, CartVoucher } from "./";
+import { AppContext } from "../../pages/_app";
+import { useContext, useEffect, useState } from "react";
+import state from "../../state";
 
-export const CartGrid = ({ products }) => {
+/**
+ * Add the shipping to the subtotal price
+ *
+ * @param {number} subtotal
+ * @param {string} shippingMethod
+ * @returns {number}
+ */
+const getShippingPrice = (subtotal, shippingMethod) => {
+    switch (shippingMethod) {
+        // not in design :D
+        case 'airplane':
+            return 149;
+        case 'express':
+            return 49;
+        default:
+            return 0
+    }
+}
 
+export const CartGrid = () => {
+    const { cart, products } = useContext(AppContext);
+    console.log('context', state);
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        if (cart && products) {
+            const items = cart.products.map((item) => {
+                const prod = products.find((product) => product.id === item.productId)
+
+                return {
+                    ...prod,
+                    quantity: item.quantity
+                }
+            });
+
+            setCartItems(items);
+        }
+    }, [cart, products])
+
+    const handleQuantityUpdate = () => {
+        state.setQuantity(2, 2);
+    }
     const handleUpdateCart = () => {
         console.log('cart will be updated');
     }
-
-    const handleApplyCoupon = () => {
-        console.log('coupon will be applied');
-    }
-
-    if (products.length <= 0) {
+    if (cartItems.length <= 0) {
         return (
             <p>There are no products available</p>
         )
     }
 
     return (
-        <div>
-            <header className="border-b flex text-gray-400 text-center">
-                <p className="w-7/12 p-2">Product</p>
-                <p className="w-2/12 p-2">Price</p>
-                <p className="w-2/12 p-2">Quantity</p>
-                <p className="w-1/12 p-2">Total</p>
+        <>
+            <header className="border-b flex gap-2 text-gray-400 text-center">
+                <p className="w-full grow shrink p-2">Product</p>
+                <p className="w-20 grow-0 shrink-0 p-2">Price</p>
+                <p className="w-20 grow-0 shrink-0 p-2">Quantity</p>
+                <p className="w-20 grow-0 shrink-0 p-2">Total</p>
             </header>
+
             <ul className="w-full mb-6">
-                {products.map(product => (
-                    <li key={product.id} className="flex items-center justify-center">
-                        <CartProduct product={product}/>
+                {cartItems.map(product => (
+                    <li key={product.id}>
+                        <CartProduct product={product} updateQuantity={handleQuantityUpdate}/>
                     </li>
                 ))}
             </ul>
 
             <footer className="flex flex-col md:flex-row justify-between">
-                <div className="inline mb-6 lg:mb-0">
-                    <input type="text" className="border px-6 py-3 mr-3" placeholder="Coupon Code"/>
-
-                    <button className="border border-black border-2 px-6 py-3" onClick={handleApplyCoupon}>Apply Coupon</button>
-                </div>
+                <CartVoucher/>
 
                 <button className="bg-gray-400 text-white px-6 py-3" onClick={handleUpdateCart}>Update Cart</button>
             </footer>
-        </div>
+        </>
 
     )
 }

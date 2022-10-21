@@ -3,33 +3,20 @@ import { DefaultLayout } from "../layouts";
 import { FiltersUsed, GridControls, FilterControls, ProductsGrid } from "../components/catalog";
 import { CartControls } from "../components/cart";
 
-import { useEffect, useState } from "react";
-import { API_URL } from "../constants";
+import { useContext, useEffect, useState } from "react";
 import { Loader } from "../components/common";
 import { Filters } from "../components/common/Filters";
+import { AppContext } from "./_app";
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
+    const { products } = useContext(AppContext);
     const [perRow, setPerRow] = useState(4);
     const [showFilters, setShowFilters] = useState(false);
-    const [productsLoading, setProductsLoading] = useState(false);
+    const [productsLoading, setProductsLoading] = useState(true);
 
     useEffect(() => {
-        setProductsLoading(true);
-
-        fetch(`${API_URL}/products`)
-            .then(res => res.json())
-            .then(json => {
-                setProductsLoading(false);
-
-                setProducts(json)
-            })
-            .catch((e) => {
-                // Notification instead of this log
-                console.log(e);
-            });
-
-    }, []);
+        products && setProductsLoading(false);
+    }, [products]);
 
     return (
         <>

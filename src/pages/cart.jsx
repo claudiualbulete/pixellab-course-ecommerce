@@ -1,41 +1,49 @@
 import Head from 'next/head'
 import { DefaultLayout } from "../layouts";
-import { ContinueShopping, CartCheckout, CartControls, CartGrid } from "../components/cart";
-import { useEffect, useState } from "react";
-import { API_URL } from "../constants";
+import { ContinueShopping, CartTotals, CartControls, CartGrid } from "../components/cart";
+import { useContext, useEffect, useState } from "react";
 import { Loader } from "../components/common";
+import { useProducts } from "../hooks/use-products";
+import { AppContext } from "./_app";
 
-const Cart = () => {
-    const [products, setProducts] = useState([]);
-    const [productsLoading, setProductsLoading] = useState(false);
-
-    useEffect(() => {
-        setProductsLoading(true);
-        fetch(`${API_URL}/products?limit=3`)
-            .then(res => res.json())
-            .then(json => {
-                setProductsLoading(false);
-
-                setProducts(json)
-            })
-            .catch((e) => {
-                // Notification instead of this log
-                console.log(e);
-            });
-    }, []);
-
-    useEffect(() => {
-        const products = [];
-        for (let i = 1; i <= 2; i++) {
-            products.push({
-                id: Math.random(),
-                name: 'prod name',
-                price: '200'
-            });
+/**
+ * Calculate the total from all the products inside the cart
+ *
+ * @param {Object[]} products
+ * @returns {number}
+ */
+const calculateSubtotal = (products) => {
+    return products.reduce((total, product) => {
+        if (product.price) {
+            total += parseInt(product.price);
         }
 
-        setProducts(products);
-    }, []);
+        return total;
+    }, 0);
+}
+
+const Cart = () => {
+    const { products } = useContext(AppContext);
+    const [pageLoading, setPageLoading] = useState(true);
+    const [priceTotal, setPriceTotal] = useState(0);
+    const [priceShipping, setPriceShipping] = useState(0);
+    const [priceSubtotal, setPriceSubtotal] = useState(0);
+
+    useEffect(() => {
+        if (products) {
+            setPageLoading(false);
+
+            const subtotal = calculateSubtotal(products);
+            const total = subtotal + priceShipping;
+
+            setPriceSubtotal(subtotal);
+            setPriceTotal(total);
+        }
+    }, [products, priceShipping]);
+
+    if (!products) {
+        return false;
+    }
 
     return (
         <>
@@ -53,16 +61,18 @@ const Cart = () => {
                 </section>
 
                 <div className="flex my-16">
-                    {productsLoading ? (
+                    {pageLoading ? (
                         <Loader/>
                     ) : (
-                        <div className="flex flex-col lg:flex-row w-full justify-between gap-6">
-                            <div className="w-full lg:w-2/3">
+                        <div className="grid grid-cols-12 gap-8">
+                            <div className="w-full col-span-8">
                                 <CartGrid products={products}/>
                             </div>
 
-                            <div className="w-full lg:w-1/3">
-                                <CartCheckout products={products}/>
+                            <div className="w-full col-span-4">
+                                <CartTotals products={products} priceTotal={priceTotal}
+                                            priceSubtotal={priceSubtotal}
+                                            setShippingPrice={setPriceShipping}/>
                             </div>
                         </div>
                     )}

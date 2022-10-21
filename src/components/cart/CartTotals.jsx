@@ -1,54 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getCurrency } from "../../utils";
 import { CartCheckoutSection } from "./";
+import { AppContext } from "../../pages/_app";
 
-/**
- * Calculate the total from all the products inside the cart
- *
- * @param {Object[]} products
- * @returns {number}
- */
-const calculateSubtotal = (products) => {
-    return products.reduce((total, product) => {
-        if (product.price) {
-            total += parseInt(product.price);
-        }
-
-        return total;
-    }, 0);
-}
-
-/**
- * Add the shipping to the subtotal price
- *
- * @param {number} subtotal
- * @param {string} shippingMethod
- * @returns {number}
- */
-const calculateTotal = (subtotal, shippingMethod) => {
-    switch (shippingMethod) {
-        // not in design :D
-        case 'airplane':
-            return subtotal + 149;
-        case 'express':
-            return subtotal + 49;
-        default:
-            return subtotal
-    }
-}
-
-export const CartCheckout = ({ products }) => {
+export const CartTotals = ({ products, priceTotal, priceSubtotal, setShippingPrice }) => {
     const [shippingMethod, setShippingMethod] = useState('standard');
-    const [priceTotal, setPriceTotal] = useState(0);
-    const [priceSubTotal, setPriceSubTotal] = useState(0);
+    const { cart } = useContext(AppContext);
 
-    useEffect(() => {
-        const subtotal = calculateSubtotal(products);
-        const total = calculateTotal(subtotal, shippingMethod);
-
-        setPriceSubTotal(subtotal);
-        setPriceTotal(total);
-    }, [products, shippingMethod]);
+    const handleShippingChange = (shippingMethod) => {
+        setShippingMethod(shippingMethod);
+        setShippingPrice && setShippingPrice(value)
+    }
 
     if (products.length <= 0) {
         return (
@@ -61,7 +23,7 @@ export const CartCheckout = ({ products }) => {
             <header className="bg-gray-200 py-2 px-4">Cart Totals</header>
 
             <CartCheckoutSection name="Subtotal">
-                <p className="text-gray-400">{getCurrency(priceSubTotal)}</p>
+                <p className="text-gray-400">{getCurrency(priceSubtotal)}</p>
             </CartCheckoutSection>
 
             <CartCheckoutSection name="Shipping">
@@ -90,7 +52,9 @@ export const CartCheckout = ({ products }) => {
                 <p className="text-2xl">{getCurrency(priceTotal)}</p>
             </CartCheckoutSection>
 
-            <button className="mt-6 bg-black text-white px-6 py-3 uppercase w-full">Proceed to checkout</button>
+            <footer>
+                <button className="mt-6 bg-black text-white px-6 py-3 uppercase w-full">Proceed to checkout</button>
+            </footer>
         </section>
     )
 }

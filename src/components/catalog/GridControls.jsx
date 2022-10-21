@@ -1,5 +1,14 @@
 import { BsGrid3X3, BsGrid1X2, BsGrid3X2 } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import { DEFAULT_GRID_STORAGE_KEY, DEFAULT_GRID_COLS } from "../../constants";
+
+const getGridNumberOfCols = () => {
+    if (typeof window === 'undefined') {
+        return Number(DEFAULT_GRID_COLS);
+    }
+    
+    return Number(window.localStorage.getItem(DEFAULT_GRID_STORAGE_KEY) || DEFAULT_GRID_COLS);
+}
 
 export const GridButton = ({ title, isActive, children, onClick }) => {
     return (
@@ -13,10 +22,12 @@ export const GridButton = ({ title, isActive, children, onClick }) => {
 };
 
 export const GridControls = ({ setPerRow }) => {
-    const [active, setActive] = useState(4);
+    const [active, setActive] = useState(getGridNumberOfCols());
 
     useEffect(() => {
         setPerRow(active);
+
+        window.localStorage.setItem(DEFAULT_GRID_STORAGE_KEY, String(active));
     }, [active, setPerRow]);
 
     return (

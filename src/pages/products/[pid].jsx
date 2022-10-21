@@ -5,40 +5,29 @@ import { useRouter } from "next/router";
 
 import { DefaultLayout } from "../../layouts";
 import { useEffect, useState } from "react";
-import { API_URL } from "../../constants";
 import { ContinueShopping, CartControls } from "../../components/cart";
-import { Loader } from "../../components/common";
+import { Loader, Error } from "../../components/common";
 import { ProductRating } from "../../components/catalog";
 import { getCurrency } from "../../utils";
+import { useProduct } from "../../hooks/use-product";
 
 const Product = () => {
     const router = useRouter();
     const { pid } = router.query;
 
-    const [product, setProduct] = useState({});
+    const { product, status } = useProduct(pid);
     const [productTitle, setProductTitle] = useState('Product page');
     const [productLoading, setProductLoading] = useState(true);
 
     useEffect(() => {
-        setProductLoading(true);
-
-        if (pid) {
-            fetch(`${API_URL}/products/${pid}`)
-                .then(res => res.json())
-                .then(json => {
-                    setProductLoading(false);
-
-                    setProduct(json);
-                    setProductTitle(json.title);
-                })
-                .catch((e) => {
-                    // Notification instead of this log
-                    console.log(e);
-                });
+        if (status !== '200') {
+            setProductLoading(false);
         }
-    }, [pid]);
-
-    const { title, image, rating = {}, description, price, category } = product
+        if (product) {
+            setProductLoading(false);
+            setProductTitle(product.title);
+        }
+    }, [product, status]);
 
     return (
         <>
@@ -55,39 +44,39 @@ const Product = () => {
                     </div>
                 </section>
 
-
                 <section className="flex my-16">
-                    {productLoading ? (
-                        <Loader/>
-                    ) : (
+                    {productLoading && <Loader/>}
+                    {status === '404' && <Error/>}
+                    {product && (
                         <div className="flex flex-col lg:flex-row w-full gap-12">
                             <div className="w-full lg:w-1/2">
-                                <Image layout="responsive" width="500" height="500"
-                                       src={image}
-                                       alt={title}
+                                <Image width="400" height="400"
+                                       objectFit="contain"
+                                       src={product.image}
+                                       alt={product.title}
                                 />
                             </div>
 
                             <div className="w-full lg:w-1/2">
                                 <header className="mb-12">
-                                    <h1 className="mb-3 uppercase text-2xl">{title}</h1>
+                                    <h1 className="mb-3 uppercase text-2xl">{product.title}</h1>
 
                                     <ProductRating
-                                        rating={rating}
+                                        rating={product.rating}
                                         showReviewers={true}
                                     />
                                 </header>
 
                                 <p className="my-6">
-                                    {description}
+                                    {product.description}
                                 </p>
 
                                 <p className="my-6 text-3xl text-black">
-                                    {getCurrency(price)}
+                                    {getCurrency(product.price)}
                                 </p>
 
                                 <p className="my-6">
-                                    <b>Category</b>: {category}
+                                    <b>Category</b>: {product.category}
                                 </p>
 
                                 <footer className="mt-12">

@@ -5,6 +5,8 @@ const getStarColor = (current, total) => {
 }
 
 export const ProductRating = ({ rating, showReviewers = false }) => {
+    if (!rating) return false;
+
     const stars = Math.round(rating.rate);
     const reviewers = rating.count;
 

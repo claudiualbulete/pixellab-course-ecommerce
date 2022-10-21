@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BiX } from "react-icons/bi";
@@ -21,38 +21,45 @@ export const CartProduct = ({ product, removeProduct, updateQuantity }) => {
         updateQuantity && updateQuantity(id, newQuantity);
     }
 
+    useEffect(() => {
+        if (product.quantity) {
+            setQuantity(product.quantity);
+        }
+    }, [product, setQuantity])
+
     return (
-        <article className="py-6 w-full flex align-center justify-between gap-6 border-b">
-            <button className="w-1/12" title="Remove product from cart" onClick={handleRemoveProduct}>
+        <article className="py-6 w-full flex border-b gap-2">
+            <button className="w-4 grow-0 shrink-0" title="Remove product from cart" onClick={handleRemoveProduct}>
                 <BiX/>
             </button>
 
             <Link href={`/products/${id}`}>
-                <a className="w-2/12 h-24" title={`Visit product: ${title}`}>
+                <a className="w-28 grow-0 shrink-0" title={`Visit product: ${title}`}>
                     <Image width="100" height="100"
+                           objectFit="contain"
                            src={image}
                     />
                 </a>
             </Link>
 
-            <div className="flex align-center flex-col w-5/12 justify-center">
+            <div className="w-full grow shrink flex align-center flex-col justify-center">
                 <h3 className="text-md uppercase text-zinc-800 font-medium">{title} </h3>
 
                 <ProductRating rating={rating}/>
             </div>
 
-            <div className="w-1/12 flex justify-center items-center">
+            <div className="w-20 grow-0 shrink-0 flex justify-center items-center">
                 {getCurrency(price)}
             </div>
 
-            <div className="w-2/12 flex justify-center items-center">
+            <div className="w-20 grow-0 shrink-0 flex justify-center items-center">
                 <input type="number" className="border px-4 py-2 w-full"
                        value={quantity}
                        onChange={handleQuantityUpdate}
                 />
             </div>
 
-            <div className="w-1/12 flex justify-center items-center">{getCurrency(price)}</div>
+            <div className="w-20 grow-0 shrink-0 flex justify-center items-center">{getCurrency(price)}</div>
         </article>
     )
 }
